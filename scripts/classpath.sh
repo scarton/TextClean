@@ -1,5 +1,5 @@
-CPBASE="/home/steve/.m2/repository"
-CLASSPATH="/home/steve/projects/TextClean/target/classes:\
+CPBASE="/cygdrive/c/Users/scarton/.m2/repository"
+CLASSPATH="/cygdrive/c/projects/TextClean/target/classes:\
 $CPBASE/org/apache/opennlp/opennlp-tools/1.6.0/opennlp-tools-1.6.0.jar:\
 $CPBASE/org/apache/opennlp/opennlp-uima/1.6.0/opennlp-uima-1.6.0.jar:\
 $CPBASE/edu/stanford/nlp/stanford-corenlp/3.5.2/stanford-corenlp-3.5.2.jar:\

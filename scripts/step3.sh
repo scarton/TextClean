@@ -8,8 +8,8 @@ source ./classpath.sh
 cd ..
 #mvn -DskipTests clean package
 
+#echo "$(cygpath -pw "$CLASSPATH")"
 
-java -Xmx10g -Dfile.encoding=UTF-8 -classpath $CLASSPATH cobra.textclean.batch.ReduceSentenceFiles \
-    /home/Sharing/ENRON/out/step1 \
-    /home/Sharing/ENRON/out/step3
-
+java -Xmx10g -Dfile.encoding=UTF-8 -classpath "$(cygpath -pw "$CLASSPATH")" cobra.textclean.batch.ReduceSentenceFiles \
+    H:/data/Enron/output/regex \
+    H:/data/Enron/output/sentences

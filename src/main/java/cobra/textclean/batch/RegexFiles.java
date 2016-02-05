@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import cobra.textclean.RegexCleaner;
 import cobra.textclean.util.IO;
-import cobra.textclean.util.ProcessLimit;
 
 /**
  * <p>Performs regex cleanup of text in files in the specified directory. Writes to the specified output directory</p>
@@ -20,12 +19,14 @@ import cobra.textclean.util.ProcessLimit;
  */
 public class RegexFiles {
 	final static Logger logger = LoggerFactory.getLogger(RegexFiles.class);
+	final static int INDEX_LIMIT = 100; //Integer.MAX_VALUE;
+	static int c=0;
 	
-	public int processFiles(File dir, File outP, int cur, int limit) throws IOException {
+	public void processFiles(File dir, File outP) throws IOException {
 		logger.info("Processing directory {}",dir.getPath());
 		File[] listOfFiles = dir.listFiles();
 		RegexCleaner cleaner = new RegexCleaner();
-		for (int i = 0; cur < ProcessLimit.get() && i<listOfFiles.length; i++) {
+		for (int i = 0; c < INDEX_LIMIT && i<listOfFiles.length; i++) {
 			if (listOfFiles[i].isFile()) {
 				if (listOfFiles[i].getName().endsWith(".txt")) {
 //					logger.debug("File " + listOfFiles[i].getName());
@@ -37,20 +38,18 @@ public class RegexFiles {
 						IO.putContent(outF, cleaner.getCleanedText());
 					}
 				}
-				if (cur%1000==0)
-					logger.info("{}",cur);
-				cur++;
+				if (c%1000==0)
+					logger.info("{}",c);
+				c++;
 			} else {
-				cur = processFiles(listOfFiles[i], outP, cur, limit);
+				processFiles(listOfFiles[i], outP);
 			}
 		}
-		return cur;
+			
 	}
 
 	public static void main(String[] args) throws IOException {
-		int l = ProcessLimit.get();
-		int c=0;
-		logger.info("Starting REGEX cleanups - up to {} Files",l);
+		logger.info("Starting REGEX cleanups - up to {} Files",INDEX_LIMIT);
 		logger.info("  From {}",args[0]);
 		logger.info("  To {}",args[1]);
 		File srcF = new File(args[0]);
@@ -59,7 +58,7 @@ public class RegexFiles {
 		    throw new IllegalStateException("Couldn't create dir: " + args[1]);
 		}
 		RegexFiles processer = new RegexFiles();
-		processer.processFiles(srcF, outP,c,l);
+		processer.processFiles(srcF, outP);
 		logger.info("End of Job...");
 	}
 }

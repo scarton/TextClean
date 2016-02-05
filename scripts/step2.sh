@@ -9,6 +9,7 @@ source ./classpath.sh
 cd ..
 #mvn -DskipTests clean package
 
+#echo "$(cygpath -pw "$CLASSPATH")"
 
-java -Xmx10g -Dfile.encoding=UTF-8 -classpath $CLASSPATH cobra.textclean.batch.CreateRepeatingSentenceModel \
-    /home/Sharing/Enron/out/step1
+java -Xmx10g -Dfile.encoding=UTF-8 -classpath "$(cygpath -pw "$CLASSPATH")" cobra.textclean.batch.CreateRepeatingSentenceModel \
+    H:/data/Enron/output/regex

@@ -9,11 +9,9 @@ mvn -DskipTests clean package
 
 #echo "$(cygpath -pw "$CLASSPATH")"
 
-#export MAX=100
-
-java -Xmx10g -Dfile.encoding=UTF-8 -classpath $CLASSPATH cobra.textclean.batch.RegexFiles \
-    /home/Sharing/ENRON/Export1/VOL000001/TEXT/TEXT000001 \
-    /home/Sharing/ENRON/out/step1
+java -Xmx10g -Dfile.encoding=UTF-8 -classpath "$(cygpath -pw "$CLASSPATH")" cobra.textclean.batch.RegexFiles \
+    "Z:\Data Sets\CORA_Analytics_ENRON_Set\Export1\VOL000001\TEXT\TEXT000001" \
+    H:/data/Enron/output/regex-test
 
 #    D:/data/Enron/FromCORA \
 #    H:/data/Enron/output/regex
