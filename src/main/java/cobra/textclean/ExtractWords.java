@@ -43,7 +43,7 @@ public class ExtractWords {
 				char[] termBuffer = termAtt.buffer();
 				int termLen = termAtt.length();
 				String w = new String(termBuffer, 0, termLen);
-				words.add(spelling==null?w:spelling.correct(w));
+				words.add(spelling==null?w:spelling.correct(w)[0]);
 			}
 			ts.end();
 			ts.close();

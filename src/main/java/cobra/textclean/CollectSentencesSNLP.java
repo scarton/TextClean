@@ -35,6 +35,7 @@ public class CollectSentencesSNLP {
 //		props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
 		props.setProperty("annotators", "tokenize, ssplit");
 		props.setProperty("ssplit.newlineIsSentenceBreak", "two");
+		props.setProperty("tokenize.options", "ptb3Escaping=false");
 		pipeline = new StanfordCoreNLP(props);
 		sentenceCache = RepeatingSentenceModel.loadModel();
 	}

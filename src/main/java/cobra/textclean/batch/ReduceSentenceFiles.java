@@ -20,14 +20,16 @@ import cobra.textclean.util.IO;
 public class ReduceSentenceFiles {
 	final static Logger logger = LoggerFactory.getLogger(ReduceSentenceFiles.class);
 	final static int INDEX_LIMIT = Integer.MAX_VALUE;
-	final static boolean makeLemmatized=false;
 
 	public static void main(String[] args) throws IOException {
 		File srcF = new File(args[0]);
 		File outP = new File(args[1]);
+		if(!outP.exists() && !outP.mkdirs()){
+		    throw new IllegalStateException("Couldn't create dir: " + args[1]);
+		}
 
 		File[] listOfFiles = srcF.listFiles((File file) -> file.getName().startsWith("ENR") && file.getName().endsWith(".txt"));
-		RemoveSentencesSNLP sentReducer = new RemoveSentencesSNLP(makeLemmatized);
+		RemoveSentencesSNLP sentReducer = new RemoveSentencesSNLP();
 		for (int i = 0; i < Math.min(INDEX_LIMIT, listOfFiles.length); i++) {
 			if (listOfFiles[i].isFile()) {
 //				logger.debug("File " + listOfFiles[i].getName());
@@ -39,11 +41,6 @@ public class ReduceSentenceFiles {
 					String cleaned = sentReducer.getResults();
 					File outF = new File(outP.getPath()+'/'+fn+".txt");
 					IO.putContent(outF, cleaned);
-					if (makeLemmatized) {
-						cleaned = sentReducer.getLemmatizedResults();
-						outF = new File(outP.getPath()+'/'+fn+"-lem.txt");
-						IO.putContent(outF, cleaned);
-					}
 				}
 			}
 			if (i%1000==0)

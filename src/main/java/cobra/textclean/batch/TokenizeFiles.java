@@ -29,6 +29,7 @@ public class TokenizeFiles {
 		TokenizeText tokenizer = new TokenizeText();
 		tokenizer.loadSpelling();
 		tokenizer.loadStopWording();
+		tokenizer.loadSNLP();
 		for (int i = 0; i < Math.min(INDEX_LIMIT, listOfFiles.length); i++) {
 			if (listOfFiles[i].isFile()) {
 //				logger.debug("File " + listOfFiles[i].getName());
@@ -36,9 +37,9 @@ public class TokenizeFiles {
 				if (text != null) {
 //					logger.debug("Cleaned text\n{}",text);
 					String fn = FileName.baseName(listOfFiles[i].getName()).trim();
-					tokenizer.extractWords(text);
+					tokenizer.extractWordsSNLP(text);
 					File outF = new File(outP.getPath()+'/'+fn+".txt");
-					IO.putContent(outF, tokenizer.toString());
+					IO.putContent(outF, tokenizer.getScrubbedSentences());
 				}
 			}
 			if (i%1000==0)

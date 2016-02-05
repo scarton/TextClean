@@ -1,17 +1,27 @@
 # Remove email enclosures
 (?m)^[|> ]+ 
 # Remove From Lines
-(?m)^\s*[Ff][Rr][Oo][Mm]\s*:.*$ 
+(?m)^\s*from\s*:.*$ 
 # Remove To Lines
-(?m)^\s*[To][Oo]\s*:.*$ 
+(?m)^\s*to\s*:.*$ 
 # Remove CC Lines
-(?m)^\s*[Cc][Cc]\s*:.*$ 
+(?m)^\s*cc\s*:.*$ 
 # Remove Sent Lines
-(?m)^\s*[Se][Ee][Nn][Tt]\s*:.*$ 
+(?m)^\s*sent\s*:.*$ 
 # Subject header from subject Line
-(?m)^\s*[Se][Uu][Bb][Jj][Ee][Cc][Tt]\s*: 
-# Remove 'Original Message Separator
-(?m)^\s*\-+[Oo][Rr][Ii][Gg][Ii][Nn][Aa][Ll]\s+[Mm][Ee][Ss][Ss][Aa][Gg][Ee]\s*\-+: 
+(?m)^\s*subject\s*: 
+# Forwarded lines
+(?m)^\s*-+\s*forwarded\s.* 
+# Remove fw 
+\s*fw\s*:\s* 
+# Remove Original Message Separator
+-+\s*original\s+message\s*-+
+# Remove Lines that start with lots of dashes
+^-{5,}.*$
+# Remove Lines that end with lots of dashes
+^.*-{5,}$
+# Remove Email Patterns
+<?[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}>?
 # Remove Lines with no alphas
 (?m)^[\s\d\!@#\$%\^&\*\(\)_\+-=:\";'<>\?,\./\\]*$ 
 # Remove empty/blank Lines
